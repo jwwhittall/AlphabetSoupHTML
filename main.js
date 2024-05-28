@@ -1,25 +1,11 @@
 import "./style.css";
 import Phaser from "phaser";
+import {GameScene} from "./GameScene.js";
 
 const sizes = {
     width: 800,
     height: 550,
 };
-class GameScene extends Phaser.Scene {
-    constructor() {
-        super("scene-game");
-    }
-
-    preload() {
-    }
-
-    create() {
-    }
-
-    update() {
-    }
-
-}
 
 const config = {
     type: Phaser.WEBGL,
@@ -30,7 +16,8 @@ const config = {
         default: "arcade",
         arcade: {
             // gravity: { y: speedDown },
-            debug: true,
+            //TODO change to false once done in order to remove pink boxes
+            debug: false,
         },
     },
     scene: [GameScene],

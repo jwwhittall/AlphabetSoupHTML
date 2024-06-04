@@ -15,7 +15,7 @@ export class Enemy extends Phaser.GameObjects.Image {
 
         scene.physics.world.enable(this);
 
-      //  this.setTexture(spriteArr[Math.round(Math.random() * 25)]);
+       this.setTexture(spriteArr[Math.round(Math.random() * 25)]);
 
         this.spawnPoints = [];
         this.scene = scene;

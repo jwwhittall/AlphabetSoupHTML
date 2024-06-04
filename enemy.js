@@ -1,16 +1,21 @@
 import Phaser from "phaser";
 
+let spriteArr = ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
 export class Enemy extends Phaser.GameObjects.Image {
 
     //TODO change constructor to take player object
     constructor(scene){
         //TODO create new function to randomize sprite
-        super (scene, 0,0,"A");
+        super (scene, 0,0,"B");
 
         //add enemy to scene
         scene.add.existing(this);
 
         scene.physics.world.enable(this);
+
+      //  this.setTexture(spriteArr[Math.round(Math.random() * 25)]);
 
         this.spawnPoints = [];
         this.scene = scene;

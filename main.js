@@ -15,8 +15,6 @@ const config = {
     physics: {
         default: "arcade",
         arcade: {
-            // gravity: { y: speedDown },
-            //TODO change to false once done in order to remove pink boxes
             debug: false,
         },
     },

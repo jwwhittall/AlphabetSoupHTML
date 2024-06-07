@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import {Enemy} from "./enemy.js";
-
+import {Player} from "./player.js";
 
 export class GameScene extends Phaser.Scene {
     constructor() {
@@ -9,6 +9,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload() {
+        //load all enemy images
         this.load.image("A", "/assets/A.png");
         this.load.image("B", "/assets/B.png");
         this.load.image("C", "/assets/C.png");
@@ -35,26 +36,33 @@ export class GameScene extends Phaser.Scene {
         this.load.image("X", "/assets/X.png");
         this.load.image("Y", "/assets/Y.png");
         this.load.image("Z", "/assets/Z.png");
-
-
     }
 
     create() {
+        //add 20 enemies to scene
         for (let i = 0; i < 20; i++) {
             new Enemy(this);
-
         }
+        //add player to scene
+        this.player = new Player(this);
     }
 
     update() {
+        //create array of all enemies in scene
         this.enemies = this.children.getAll().filter(this.isEnemy)
+       //for each enemy, check if they need to be deleted
         this.enemies.forEach((enemy) =>{
             enemy.handleOut();
         })
+        //log number of enemies in scene to ensure number is constant
         console.log(this.enemies.length);
 
+        //check for input for player movement
+        this.player.move();
     }
+
     isEnemy(object){
+        //returns true if object is an enemy
         return object instanceof Enemy;
     }
 }

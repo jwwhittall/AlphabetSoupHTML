@@ -39,12 +39,13 @@ export class GameScene extends Phaser.Scene {
     }
 
     create() {
-        //add 20 enemies to scene
-        for (let i = 0; i < 20; i++) {
-            new Enemy(this);
-        }
         //add player to scene
         this.player = new Player(this);
+        //add 20 enemies to scene
+        for (let i = 0; i < 20; i++) {
+            new Enemy(this, this.player);
+        }
+
     }
 
     update() {

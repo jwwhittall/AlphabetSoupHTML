@@ -4,10 +4,7 @@ let spriteArr = ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
 "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
 export class Enemy extends Phaser.GameObjects.Image {
-
-    //TODO change constructor to take player object
     constructor(scene, player){
-        //TODO create new function to randomize sprite
         super (scene, 0,0,"B");
 
         //add enemy to scene
@@ -15,6 +12,7 @@ export class Enemy extends Phaser.GameObjects.Image {
 
         scene.physics.world.enable(this);
 
+        //TODO adjust sprite to be within a close range of the player sprite alphabetically
        this.setTexture(spriteArr[Math.round(Math.random() * 25)]);
 
         this.spawnPoints = [];
@@ -29,6 +27,8 @@ export class Enemy extends Phaser.GameObjects.Image {
 
         //set velocity based on position of player
         this.configureVelocity();
+
+        this.scene.physics.add.overlap(this.player, this, this.playerCollide, null, this.scene);
 
     }
 
@@ -121,29 +121,8 @@ export class Enemy extends Phaser.GameObjects.Image {
         }
         return false;
     }
+
+    playerCollide(){
+        console.log("Enemy collided with player!");
+    }
 }
-
-
-//temporary function to randomize velocity. will be replaced with one that seeks out player
-// configureVelocity(){
-//     switch(this.spawnIndex) {
-//         case(0): //if spawned in at top
-//             this.body.setVelocity(Math.round(16 - Math.random() * 15), 16);
-//             console.log("Enemy velocity: " + this.body.velocity.x + "," + this.body.velocity.y);
-//             break;
-//         case(1): //if spawned in bottom
-//             this.body.setVelocity(Math.round(16 - Math.random() * 15), -16);
-//             console.log("Enemy velocity: " + this.body.velocity.x + "," + this.body.velocity.y);
-//             break;
-//         case(2): //if spawned in left
-//             this.body.setVelocity(32, Math.round(8- Math.random() * 20));
-//             console.log("Enemy velocity: " + this.body.velocity.x + "," + this.body.velocity.y);
-//             break;
-//         case(3): //if spawned in right
-//             this.body.setVelocity(-32, Math.round(8-Math.random() * 20));
-//             console.log("Enemy velocity: " + this.body.velocity.x + "," + this.body.velocity.y);
-//             break;
-//         default:
-//             break;
-//     }
-// }

@@ -10,7 +10,7 @@ export class GameScene extends Phaser.Scene {
 
     preload() {
         //load all enemy images
-        this.load.image("A", "/assets/A.png");
+        this.load.image("A", "/assets/player/A.png");
         this.load.image("B", "/assets/B.png");
         this.load.image("C", "/assets/C.png");
         this.load.image("D", "/assets/D.png");

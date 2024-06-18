@@ -13,6 +13,8 @@ export class Player extends Phaser.GameObjects.Image{
 
         this.body.pushable = false;
         this.body.setCollideWorldBounds(true);
+
+        //TODO figure out how to enable WASD
         this.cursor = this.scene.input.keyboard.createCursorKeys();
 
     }

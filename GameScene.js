@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import {Enemy} from "./enemy.js";
 import {Player} from "./player.js";
+import {MenuScene} from "./MenuScene.js";
 
 export class GameScene extends Phaser.Scene {
     constructor() {
@@ -79,19 +80,21 @@ export class GameScene extends Phaser.Scene {
     update() {
         //create array of all enemies in scene
         this.enemies = this.children.getAll().filter(this.isEnemy)
+
        //for each enemy, check if they need to be deleted
         this.enemies.forEach((enemy) =>{
             enemy.handleOut();
         })
-        //log number of enemies in scene to ensure number is constant
-        //console.log(this.enemies.length);
 
         //check for input for player movement
         this.player.move();
 
+        //check if the player ran out of lives
         if(this.player.lives <= 0){
+            //if so, end game
             console.log("game over!");
             this.player.destroy();
+            this.scene.start("MenuScene");
         }
     }
 
@@ -99,7 +102,6 @@ export class GameScene extends Phaser.Scene {
         //returns true if object is an enemy
         return object instanceof Enemy;
     }
-
 
 }
 

@@ -3,6 +3,7 @@ import Phaser from "phaser";
 let spriteArr = ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
 "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
+
 export class Enemy extends Phaser.GameObjects.Image {
     constructor(scene, player){
         //temporarily set position and texture (overwritten)
@@ -28,7 +29,6 @@ export class Enemy extends Phaser.GameObjects.Image {
         //sets spawn index to a number randomly from 0 to 3
         this.spawnIndex = Math.floor(Math.random()*4);
 
-        //set spawn point
         this.configureSpawn();
 
         //set velocity based on position of player
@@ -39,20 +39,47 @@ export class Enemy extends Phaser.GameObjects.Image {
 
     }
 
-    //set spawn point to one of four locations outside of screen
-    configureSpawn()
-    {
-        //add to spawn points array with four spawn points
-        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, -10 - Math.random() * 60)); //top
-        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, this.scene.game.config.height + 10 + Math.random() * 60)); //bottom
-        this.spawnPoints.push(new Phaser.Math.Vector2(-10 - Math.random() * 60, this.scene.game.config.height/2)); //left
-        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width +10 + Math.random() * 60, this.scene.game.config.height/2)); //right
-
-        //set the location using random spawn index set in constructor
-        this.setPosition(Math.round(this.spawnPoints[this.spawnIndex].x) , Math.round(this.spawnPoints[this.spawnIndex].y) + Math.random() * 20);
-
-        console.log("Enemy spawning at " + this.spawnPoints[this.spawnIndex].x + "," + this.spawnPoints[this.spawnIndex].y + " with index " + this.spawnIndex);
+    //new spawn set function
+    configureSpawn(){
+        let x = 0;
+        let y = 0;
+        switch(this.spawnIndex){
+            case(0): //top
+                x = Math.random() * 800;
+                y = -10;
+                break;
+            case(1): //bottom
+                x = Math.random() * 800;
+                y = 560;
+                break;
+            case(2): //left
+                x = -10;
+                y = Math.random() * 550;
+                break;
+            case(3): // right
+                x = 810;
+                y = Math.random() * 550;
+                break;
+            default: break;
+        }
+        this.setPosition(x,y);
     }
+
+
+    // //set spawn point to one of four locations outside of screen
+    // configureSpawn()
+    // {
+    //     //add to spawn points array with four spawn points
+    //     this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, -10 - Math.random() * 60)); //top
+    //     this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, this.scene.game.config.height + 10 + Math.random() * 60)); //bottom
+    //     this.spawnPoints.push(new Phaser.Math.Vector2(-10 - Math.random() * 60, this.scene.game.config.height/2)); //left
+    //     this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width +10 + Math.random() * 60, this.scene.game.config.height/2)); //right
+    //
+    //     //set the location using random spawn index set in constructor
+    //     this.setPosition(Math.round(this.spawnPoints[this.spawnIndex].x) , Math.round(this.spawnPoints[this.spawnIndex].y) + Math.random() * 20);
+    //
+    //     console.log("Enemy spawning at " + this.spawnPoints[this.spawnIndex].x + "," + this.spawnPoints[this.spawnIndex].y + " with index " + this.spawnIndex);
+    // }
 
     //sets the velocity of the enemy to target the player
     configureVelocity(){
@@ -69,9 +96,9 @@ export class Enemy extends Phaser.GameObjects.Image {
             y = y / magnitude;
         }
 
-        //scale vector by 40
-        x = x * 40;
-        y = y* 40
+        //scale vector by 30 to start, then multiply by round number, so rounds get faster over time
+        x = x * 27 * this.player.roundNum;
+        y = y* 27 * this.player.roundNum;
 
         //set the velocity of the enemy
         this.body.setVelocity(x, y);

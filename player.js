@@ -22,6 +22,25 @@ export class Player extends Phaser.GameObjects.Image{
 
         this.spriteIndex = 0;
 
+        this.points = 0;
+        this.roundNum = 1;
+        this.lives = 5;
+
+        this.roundText = this.scene.add.text(10,6, "Round: 1",{
+            font: "16px Arial",
+            fill: "#42f54e",
+        });
+
+        this.scoreText = this.scene.add.text(710, 6, 'Score: 0', {
+            font: "16px Arial",
+            fill: '#42f54e'
+        });
+
+        this.livesText = this.scene.add.text(370, 6, "Lives: 5", {
+            font:"16px Arial",
+            fill:'#fc1303',
+        });
+
     }
 
     //check for input and move accordingly
@@ -63,6 +82,9 @@ export class Player extends Phaser.GameObjects.Image{
                 this.spriteIndex = 0;
                 this.setTexture(spriteArr[this.spriteIndex]);
                 this.body.setSize(this.width, this.height);
+
+                //change text accordingly
+                this.nextRound();
             }
             else{
                 //increase sprite to next index
@@ -70,9 +92,43 @@ export class Player extends Phaser.GameObjects.Image{
                 this.setTexture(spriteArr[this.spriteIndex]);
                 //adjust size of collider to match
                 this.body.setSize(this.width, this.height);
+
+                //change text accordingly
+                this.getLetter();
             }
         }
-        //else deduct points and lives
+        //if wrong letter collected, change text accordingly
+        else this.badLetter();
+    }
+
+    //changes text on screen when round advances
+    nextRound(){
+        this.points += 10;
+        this.roundNum += 1;
+        //adjust to go up by 2 every time like original?
+        this.lives = 4 + this.roundNum;
+
+        this.scoreText.setText(`Score: ${this.points}`);
+        this.roundText.setText(`Round: ${this.roundNum}`);
+        this.livesText.setText(`Lives: ${this.lives}`);
+    }
+
+    //changes screen text when correct letter collected
+    getLetter(){
+        this.points += 1;
+        this.scoreText.setText(`Score: ${this.points}`);
+    }
+
+    //changes screen text when incorrect letter collected
+    badLetter(){
+
+        if(this.points > 0){
+            this.points -= 2;
+            this.scoreText.setText(`Score: ${this.points}`);
+        }
+
+        this.lives -= 1;
+        this.livesText.setText(`Lives: ${this.lives}`);
     }
 
 }

@@ -6,6 +6,7 @@ export class GameScene extends Phaser.Scene {
     constructor() {
         super({key: "GameScene"});
         this.enemies;
+
     }
 
     preload() {
@@ -72,6 +73,7 @@ export class GameScene extends Phaser.Scene {
             new Enemy(this, this.player);
         }
 
+
     }
 
     update() {
@@ -86,11 +88,18 @@ export class GameScene extends Phaser.Scene {
 
         //check for input for player movement
         this.player.move();
+
+        if(this.player.lives <= 0){
+            console.log("game over!");
+            this.player.destroy();
+        }
     }
 
     isEnemy(object){
         //returns true if object is an enemy
         return object instanceof Enemy;
     }
+
+
 }
 

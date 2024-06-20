@@ -39,19 +39,17 @@ export class Enemy extends Phaser.GameObjects.Image {
 
     }
 
-
-
     //set spawn point to one of four locations outside of screen
     configureSpawn()
     {
         //add to spawn points array with four spawn points
-        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, -10)); //top
-        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, this.scene.game.config.height + 10)); //bottom
-        this.spawnPoints.push(new Phaser.Math.Vector2(-10, this.scene.game.config.height/2)); //left
-        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width +10, this.scene.game.config.height/2)); //right
+        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, -10 - Math.random() * 60)); //top
+        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, this.scene.game.config.height + 10 + Math.random() * 60)); //bottom
+        this.spawnPoints.push(new Phaser.Math.Vector2(-10 - Math.random() * 60, this.scene.game.config.height/2)); //left
+        this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width +10 + Math.random() * 60, this.scene.game.config.height/2)); //right
 
-        //set the location using random spawn index set in constructor, add random number to avoid clumps
-        this.setPosition(Math.round(this.spawnPoints[this.spawnIndex].x) + Math.random() * 60, Math.round(this.spawnPoints[this.spawnIndex].y) + Math.random() * 20);
+        //set the location using random spawn index set in constructor
+        this.setPosition(Math.round(this.spawnPoints[this.spawnIndex].x) , Math.round(this.spawnPoints[this.spawnIndex].y) + Math.random() * 20);
 
         console.log("Enemy spawning at " + this.spawnPoints[this.spawnIndex].x + "," + this.spawnPoints[this.spawnIndex].y + " with index " + this.spawnIndex);
     }

@@ -41,6 +41,10 @@ export class Player extends Phaser.GameObjects.Image{
             fill:'#fc1303',
         });
 
+        this.goodSound = this.scene.sound.add("collectLetter");
+        this.badSound = this.scene.sound.add("badLetter");
+        this.winSound = this.scene.sound.add("winRound");
+
     }
 
     //check for input and move accordingly
@@ -111,12 +115,16 @@ export class Player extends Phaser.GameObjects.Image{
         this.scoreText.setText(`Score: ${this.points}`);
         this.roundText.setText(`Round: ${this.roundNum}`);
         this.livesText.setText(`Lives: ${this.lives}`);
+
+        this.winSound.play();
     }
 
     //changes screen text when correct letter collected
     getLetter(){
         this.points += 1;
         this.scoreText.setText(`Score: ${this.points}`);
+
+        this.goodSound.play();
     }
 
     //changes screen text when incorrect letter collected
@@ -129,6 +137,8 @@ export class Player extends Phaser.GameObjects.Image{
 
         this.lives -= 1;
         this.livesText.setText(`Lives: ${this.lives}`);
+
+        this.badSound.play();
     }
 
 }

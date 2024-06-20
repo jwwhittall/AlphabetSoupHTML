@@ -64,6 +64,10 @@ export class GameScene extends Phaser.Scene {
         this.load.image("X", "/assets/X.png");
         this.load.image("Y", "/assets/Y.png");
         this.load.image("Z", "/assets/Z.png");
+
+        this.load.audio("collectLetter", "/assets/audio/collectLetter.mp3");
+        this.load.audio("badLetter", "/assets/audio/loseLetter.mp3");
+        this.load.audio("winRound", "/assets/audio/winRound.mp3");
     }
 
     create() {
@@ -73,8 +77,6 @@ export class GameScene extends Phaser.Scene {
         for (let i = 0; i < 20; i++) {
             new Enemy(this, this.player);
         }
-
-
     }
 
     update() {

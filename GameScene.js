@@ -9,8 +9,34 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload() {
+        //load player sprites
+        this.load.image("pA", "/assets/player/A.png");
+        this.load.image("pB", "/assets/player/B.png");
+        this.load.image("pC", "/assets/player/C.png");
+        this.load.image("pD", "/assets/player/D.png");
+        this.load.image("pE", "/assets/player/E.png");
+        this.load.image("pF", "/assets/player/F.png");
+        this.load.image("pG", "/assets/player/G.png");
+        this.load.image("pH", "/assets/player/H.png");
+        this.load.image("pI", "/assets/player/i.png");
+        this.load.image("pJ", "/assets/player/J.png");
+        this.load.image("pK", "/assets/player/K.png");
+        this.load.image("pL", "/assets/player/L.png");
+        this.load.image("pM", "/assets/player/M.png");
+        this.load.image("pN", "/assets/player/N.png");
+        this.load.image("pO", "/assets/player/O.png");
+        this.load.image("pP", "/assets/player/P.png");
+        this.load.image("pQ", "/assets/player/Q.png");
+        this.load.image("pR", "/assets/player/R.png");
+        this.load.image("pS", "/assets/player/S.png");
+        this.load.image("pT", "/assets/player/T.png");
+        this.load.image("pU", "/assets/player/U.png");
+        this.load.image("pV", "/assets/player/V.png");
+        this.load.image("pW", "/assets/player/W.png");
+        this.load.image("pX", "/assets/player/X.png");
+        this.load.image("pY", "/assets/player/Y.png");
+
         //load all enemy images
-        this.load.image("A", "/assets/player/A.png");
         this.load.image("B", "/assets/B.png");
         this.load.image("C", "/assets/C.png");
         this.load.image("D", "/assets/D.png");
@@ -56,7 +82,7 @@ export class GameScene extends Phaser.Scene {
             enemy.handleOut();
         })
         //log number of enemies in scene to ensure number is constant
-        console.log(this.enemies.length);
+        //console.log(this.enemies.length);
 
         //check for input for player movement
         this.player.move();

@@ -5,19 +5,25 @@ let spriteArr = ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
 
 export class Enemy extends Phaser.GameObjects.Image {
     constructor(scene, player){
+        //temporarily set position and texture (overwritten)
         super (scene, 0,0,"B");
 
         //add enemy to scene
         scene.add.existing(this);
-
         scene.physics.world.enable(this);
 
-        //TODO adjust sprite to be within a close range of the player sprite alphabetically
-       this.setTexture(spriteArr[Math.round(Math.random() * 25)]);
-
-        this.spawnPoints = [];
-        this.scene = scene;
+        //access player
         this.player = player;
+
+        //sets sprite based on player letter
+        this.spriteIndex = this.generateIndex();
+        console.log("sprite index set to " + this.spriteIndex);
+        this.setTexture(spriteArr[this.spriteIndex]);
+
+        //create empty array with spawn points
+        this.spawnPoints = [];
+        //access GameScene
+        this.scene = scene;
 
         //sets spawn index to a number randomly from 0 to 3
         this.spawnIndex = Math.floor(Math.random()*4);
@@ -28,9 +34,12 @@ export class Enemy extends Phaser.GameObjects.Image {
         //set velocity based on position of player
         this.configureVelocity();
 
-        this.scene.physics.add.overlap(this.player, this, this.playerCollide, null, this.scene);
+        //register for collisions between enemy and player, and call playerCollide() when this happens
+        this.scene.physics.add.overlap(this.player, this, () =>this.playerCollide(), null, this.scene);
 
     }
+
+
 
     //set spawn point to one of four locations outside of screen
     configureSpawn()
@@ -123,6 +132,23 @@ export class Enemy extends Phaser.GameObjects.Image {
     }
 
     playerCollide(){
-        console.log("Enemy collided with player!");
+        //have player check if enemy is the next letter needed
+        this.player.checkIndex(this.spriteIndex);
+
+        //destroy enemy; "marked" as used in old code not needed as enemy is immediately destroyed with no delay
+        new Enemy(this.scene,this.player);
+        this.destroy();
     }
+
+    //returns a number to be used as the sprite index for the enemy
+    generateIndex(){
+        //is the player nearing the end of the alphabet ("U" or later)
+        if (this.player.spriteIndex >= 20){
+            //if so, give set range of end of alphabet (avoiding index beyond array length)
+            return Math.round(Math.random() *4) + 20;
+        }
+        //if not, add player index to random number 0-4
+        else return Math.round(Math.random() * 4) + this.player.spriteIndex;
+    }
+
 }

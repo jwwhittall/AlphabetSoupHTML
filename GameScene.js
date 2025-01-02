@@ -2,68 +2,18 @@ import Phaser from "phaser";
 import {Enemy} from "./enemy.js";
 import {Player} from "./player.js";
 import {MenuScene} from "./MenuScene.js";
+import {Coin} from "./coin.js";
+import * as WebFontLoader from "/node_modules/webfontloader/webfontloader.js";
 
 export class GameScene extends Phaser.Scene {
     constructor() {
         super({key: "GameScene"});
         this.enemies;
-
+        this.done = false;
     }
 
     preload() {
-        //load player sprites
-        this.load.image("pA", "/assets/player/A.png");
-        this.load.image("pB", "/assets/player/B.png");
-        this.load.image("pC", "/assets/player/C.png");
-        this.load.image("pD", "/assets/player/D.png");
-        this.load.image("pE", "/assets/player/E.png");
-        this.load.image("pF", "/assets/player/F.png");
-        this.load.image("pG", "/assets/player/G.png");
-        this.load.image("pH", "/assets/player/H.png");
-        this.load.image("pI", "/assets/player/i.png");
-        this.load.image("pJ", "/assets/player/J.png");
-        this.load.image("pK", "/assets/player/K.png");
-        this.load.image("pL", "/assets/player/L.png");
-        this.load.image("pM", "/assets/player/M.png");
-        this.load.image("pN", "/assets/player/N.png");
-        this.load.image("pO", "/assets/player/O.png");
-        this.load.image("pP", "/assets/player/P.png");
-        this.load.image("pQ", "/assets/player/Q.png");
-        this.load.image("pR", "/assets/player/R.png");
-        this.load.image("pS", "/assets/player/S.png");
-        this.load.image("pT", "/assets/player/T.png");
-        this.load.image("pU", "/assets/player/U.png");
-        this.load.image("pV", "/assets/player/V.png");
-        this.load.image("pW", "/assets/player/W.png");
-        this.load.image("pX", "/assets/player/X.png");
-        this.load.image("pY", "/assets/player/Y.png");
-
-        //load all enemy images
-        this.load.image("B", "/assets/B.png");
-        this.load.image("C", "/assets/C.png");
-        this.load.image("D", "/assets/D.png");
-        this.load.image("E", "/assets/E.png");
-        this.load.image("F", "/assets/F.png");
-        this.load.image("G", "/assets/G.png");
-        this.load.image("H", "/assets/H.png");
-        this.load.image("I", "/assets/I.png");
-        this.load.image("J", "/assets/J.png");
-        this.load.image("K", "/assets/K.png");
-        this.load.image("L", "/assets/L.png");
-        this.load.image("M", "/assets/M.png");
-        this.load.image("N", "/assets/N.png");
-        this.load.image("O", "/assets/O.png");
-        this.load.image("P", "/assets/P.png");
-        this.load.image("Q", "/assets/Q.png");
-        this.load.image("R", "/assets/R.png");
-        this.load.image("S", "/assets/S.png");
-        this.load.image("T", "/assets/T.png");
-        this.load.image("U", "/assets/U.png");
-        this.load.image("V", "/assets/V.png");
-        this.load.image("W", "/assets/W.png");
-        this.load.image("X", "/assets/X.png");
-        this.load.image("Y", "/assets/Y.png");
-        this.load.image("Z", "/assets/Z.png");
+        this.load.image("coin", "/assets/coin.png");
 
         this.load.audio("collectLetter", "/assets/audio/collectLetter.mp3");
         this.load.audio("badLetter", "/assets/audio/loseLetter.mp3");
@@ -74,9 +24,13 @@ export class GameScene extends Phaser.Scene {
         //add player to scene
         this.player = new Player(this);
         //add 20 enemies to scene
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 18; i++) {
             new Enemy(this, this.player);
         }
+        //add coin to scene
+        this.coin = new Coin(this, this.player);
+        this.done = false;
+
     }
 
     update() {
@@ -92,11 +46,16 @@ export class GameScene extends Phaser.Scene {
         this.player.move();
 
         //check if the player ran out of lives
-        if(this.player.lives <= 0){
-            //if so, end game
-            console.log("game over!");
-            this.player.destroy();
-            this.scene.start("MenuScene");
+        if(this.player.lives <= 0 && this.done ===false){
+                //if so, end game
+                this.done = true;
+                this.endScreen();
+                //TODO game over sound
+        }
+
+        if(this.player.points < 0){
+            this.player.points = 0;
+            this.player.scoreText.setText('Score: ' + this.player.points);
         }
     }
 
@@ -105,5 +64,58 @@ export class GameScene extends Phaser.Scene {
         return object instanceof Enemy;
     }
 
+    endScreen(){
+        let x = this.game.config.width;
+        let y = this.game.config.height;
+        //add a rectangle to fade the screen out
+        this.add.rectangle(x/2, y/2,x, y, 0o00000, 0.71);
+
+        //create text "GAME OVER"
+        this.add.text(60, 30, 'GAME OVER!', {
+            font: '80px Soup',
+            fill: '#fac507'
+        });
+        //TODO add slide in animation?
+        //TODO get the enemies to keep moving?
+
+        //display text for score
+       let score =  this.add.text(70, 150, "Score " + this.player.points, {
+            font: '50px Soup',
+            fill: '#fac507'
+        });
+       console.log(score.text);
+
+        //TODO high score
+
+        this.add.text(430, 150, this.player.coinText.text, {
+            font: '50px Soup',
+            fill: '#fac507'
+        });
+
+       // this.add.rectangle(200, 300, 500, 300, 0o00000, 0.71)
+        let reheat = this.add.text(160, 350, 'REHEAT?', {
+            font: '75px Soup',
+            fill:'#fac507'
+        });
+
+        reheat.setInteractive();
+        reheat.on('pointerdown', () =>
+        {
+            this.scene.restart();
+        });
+
+        reheat.on('pointerover', () =>{
+            reheat.setAngle(-1);
+            reheat.setPosition(160,350);
+            reheat.setColor('#ff6200');
+        });
+
+        reheat.on('pointerout', () =>{
+            reheat.setAngle(0);
+            reheat.setPosition(150, 350)
+            reheat.setColor('#fac507')
+        });
+
+    }
 }
 

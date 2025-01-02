@@ -12,7 +12,6 @@ export class MenuScene extends Phaser.Scene {
 
         //load in sounds
         this.load.audio("bgMusic", "/assets/audio/alphabet_soup.mp3");
-
     }
 
     create(){
@@ -26,12 +25,9 @@ export class MenuScene extends Phaser.Scene {
         this.menu.setScale(this.game.config.width / this.menu.width, this.game.config.height / this.menu.height);
 
         this.cursor = this.input.keyboard.createCursorKeys();
-
-
     }
 
     update(){
-
         const {space} = this.cursor;
 
         if(space.isDown){

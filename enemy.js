@@ -1,9 +1,5 @@
 import Phaser from "phaser";
 
-let spriteArr = ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-
-
 export class Enemy extends Phaser.GameObjects.Image {
     constructor(scene, player){
         //temporarily set position and texture (overwritten)
@@ -16,13 +12,12 @@ export class Enemy extends Phaser.GameObjects.Image {
         //access player
         this.player = player;
 
+
         //sets sprite based on player letter
         this.spriteIndex = this.generateIndex();
-        console.log("sprite index set to " + this.spriteIndex);
-        this.setTexture(spriteArr[this.spriteIndex]);
+        //console.log("sprite index set to " + this.spriteIndex);
+        this.setLetter(this.spriteIndex);
 
-        //create empty array with spawn points
-        this.spawnPoints = [];
         //access GameScene
         this.scene = scene;
 
@@ -50,36 +45,20 @@ export class Enemy extends Phaser.GameObjects.Image {
                 break;
             case(1): //bottom
                 x = Math.random() * 800;
-                y = 560;
+                y = 580;
                 break;
             case(2): //left
                 x = -10;
                 y = Math.random() * 550;
                 break;
             case(3): // right
-                x = 810;
+                x = 830;
                 y = Math.random() * 550;
                 break;
             default: break;
         }
         this.setPosition(x,y);
     }
-
-
-    // //set spawn point to one of four locations outside of screen
-    // configureSpawn()
-    // {
-    //     //add to spawn points array with four spawn points
-    //     this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, -10 - Math.random() * 60)); //top
-    //     this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width/2, this.scene.game.config.height + 10 + Math.random() * 60)); //bottom
-    //     this.spawnPoints.push(new Phaser.Math.Vector2(-10 - Math.random() * 60, this.scene.game.config.height/2)); //left
-    //     this.spawnPoints.push(new Phaser.Math.Vector2(this.scene.game.config.width +10 + Math.random() * 60, this.scene.game.config.height/2)); //right
-    //
-    //     //set the location using random spawn index set in constructor
-    //     this.setPosition(Math.round(this.spawnPoints[this.spawnIndex].x) , Math.round(this.spawnPoints[this.spawnIndex].y) + Math.random() * 20);
-    //
-    //     console.log("Enemy spawning at " + this.spawnPoints[this.spawnIndex].x + "," + this.spawnPoints[this.spawnIndex].y + " with index " + this.spawnIndex);
-    // }
 
     //sets the velocity of the enemy to target the player
     configureVelocity(){
@@ -176,4 +155,171 @@ export class Enemy extends Phaser.GameObjects.Image {
         else return Math.round(Math.random() * 4) + this.player.spriteIndex;
     }
 
+    //changes the sprite when player is created or when letter collected
+    //takes sprite index and puts through big long switch statement
+    setLetter(index){
+        //create render texture and text object
+        let renderTexture = this.scene.add.renderTexture(0,0,50,50);
+        let text = this.scene.add.text(-200, -200, '',{
+            fontFamily: 'Soup',
+            fontSize: '22px',
+            fill: '#fcb632'
+        });
+        //which sprite index?
+        switch(index){
+            case(0): //if start
+                text.setText('B'); //set text as needed
+                renderTexture.draw(text, 0,0); //draw the text on it
+                renderTexture.saveTexture('eB'); //save it as a key
+                this.setTexture('eB'); //set the texture
+                console.log("B letter!")
+                break;
+            case(1):
+                text.setText('C');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eC');
+                this.setTexture('eC');
+                break;
+            case(2):
+                text.setText('D');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eD');
+                this.setTexture('eD');
+                break;
+            case(3):
+                text.setText('E');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eE');
+                this.setTexture('eE');
+                break;
+            case(4):
+                text.setText('F');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eF');
+                this.setTexture('eF');
+                break;
+            case(5):
+                text.setText('G');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eG');
+                this.setTexture('eG');
+                break;
+            case(6):
+                text.setText('H');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eH');
+                this.setTexture('eH');
+                break;
+            case(7):
+                text.setText('I');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eI');
+                this.setTexture('eI');
+                break;
+            case(8):
+                text.setText('J');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eJ');
+                this.setTexture('eJ');
+                break;
+            case(9):
+                text.setText('K');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eK');
+                this.setTexture('eK');
+                break;
+            case(10):
+                text.setText('L');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eL');
+                this.setTexture('eL');
+                break;
+            case(11):
+                text.setText('M');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eM');
+                this.setTexture('eM');
+                break;
+            case(12):
+                text.setText('N');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eN');
+                this.setTexture('eN');
+                break;
+            case(13):
+                text.setText('O');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eO');
+                this.setTexture('eO');
+                break;
+            case(14):
+                text.setText('P');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eP');
+                this.setTexture('eP');
+                break;
+            case(15):
+                text.setText('Q');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eQ');
+                this.setTexture('eQ');
+                break;
+            case(16):
+                text.setText('R');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eR');
+                this.setTexture('eR');
+                break;
+            case(17):
+                text.setText('S');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eS');
+                this.setTexture('eS');
+                break;
+            case(18):
+                text.setText('T');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eT');
+                this.setTexture('eT');
+                break;
+            case(19):
+                text.setText('U');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eU');
+                this.setTexture('eU');
+                break;
+            case(20):
+                text.setText('V');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eV');
+                this.setTexture('eV');
+                break;
+            case(21):
+                text.setText('W');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eW');
+                this.setTexture('eW');
+                break;
+            case(22):
+                text.setText('X');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eX');
+                this.setTexture('eX');
+                break;
+            case(23):
+                text.setText('Y');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eY');
+                this.setTexture('eY');
+                break;
+            case(24):
+                text.setText('Z');
+                renderTexture.draw(text, 0,0);
+                renderTexture.saveTexture('eZ');
+                this.setTexture('eZ');
+                break;
+        }
+        this.body.setSize(text.width, text.height);
+        this.body.setOffset(0,0);
+    }
 }

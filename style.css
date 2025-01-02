@@ -47,47 +47,31 @@ main {
   z-index: 1;
 }
 
-/* .gameUI {
-  width: 100%;
-  height: 100%;
-  background-color: var(--accClr);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
+@font-face{
+  font-family: Calibri;
+  src: url('public/assets/fonts/calibri.ttf');
+  font-weight: 400;
+  font-style: normal;
 }
 
-.gameUI * {
-  text-align: center;
-  margin-top: 5px;
+
+@font-face{
+  font-family: Jokerman;
+  src: url('public/assets/fonts/JOKERMAN.ttf');
+  font-weight: 400;
+  font-style: normal;
 }
 
-#gameStartDiv {
-  display: flex;
+@font-face{
+  font-family: Wingdings;
+  src: url('public/assets/fonts/wingding.ttf');
+  font-weight: 400;
+  font-style: normal;
 }
 
-#gameEndDiv {
-  display: none;
+@font-face{
+  font-family: Soup;
+  src: url('public/assets/fonts/Souprunny-1GKe.ttf');
+  font-weight: 400;
+  font-style: normal;
 }
-
-#gameStartBtn{
-  display: inline-block;
-  width: 100px;
-  padding:8px 15px;
-  margin: 20px 0;
-  text-align: center;
-  font-family: inherit;
-  border-radius: 10px;;
-}
-
-#gameStartBtn p{
-  margin-top: 0;
-}
-
-#gameStartBtn:hover{
-  background-color: var(--dkClr);
-  border: 0.5px solid var(--liClr);
-  color: var(--liClr);
-  cursor:pointer;
-} */
